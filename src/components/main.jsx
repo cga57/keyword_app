@@ -17,19 +17,20 @@ class Counter extends Component {
     e.preventDefault();
     this.state.videoURL = this.url;
     console.log(this.state.videoURL);
+    const source = String(this.state.videoURL);
     //  axios.post("api/uploadfile", this.state.videoURL);
-    const quiz_links = axios
-      .get("https://videoquizconverter.herokuapp.com/quizzes", {
-        link: JSON.stringify(videoURL),
+    axios
+      .post("https://videoquizconverter.herokuapp.com/quizzes", {
+        link: source,
       })
-      .then(() => {
-        alert("Success");
+      .then((response) => {
+        alert(response.data["Quiz"]);
       })
       .catch((error) => {
         console.log(error);
         alert("Error with API");
       });
-    alert(quiz_links);
+    // console.log(result);
   }
   onUpload(e) {
     e.preventDefault();
@@ -40,7 +41,8 @@ class Counter extends Component {
         "https://videoquizconverter.herokuapp.com/quizzes",
         this.state.videoFILE
       )
-      .then(() => {
+      .then((response) => {
+        console.log(response);
         alert("Success");
       })
       .catch((error) => {
